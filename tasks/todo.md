@@ -20,23 +20,23 @@ Personal public website at shadiyn.org. A professional landing page showcasing c
 - Iterate based on feedback
 
 ## Checklist
-- [x] Decide tech stack (React + Vite + Kumo + Cloudflare Workers)
+- [x] Decide tech stack (React + Vite + Cloudflare Workers)
 - [x] Scaffold project (package.json, tsconfig, vite config, wrangler)
-- [x] Build Hero section (name, title, tagline)
-- [x] Build Experience section (Cloudflare, Deloitte)
-- [x] Build Contact section (email, LinkedIn, GitHub)
-- [x] Assemble App.tsx with all sections
+- [x] Build MVP (Hero, Experience, Contact with Kumo + Tailwind)
 - [x] Configure Cloudflare Worker (static assets + API stub)
-- [x] Verify build passes
-- [x] Confirm contact links (email, LinkedIn URL, GitHub URL)
-- [x] Deploy to Cloudflare (`npm run deploy`)
+- [x] Confirm contact links (email, LinkedIn, GitHub)
+- [x] Deploy MVP to Cloudflare
 - [x] Configure custom domain route for shadiyn.org
-- [x] Add meta tags and SEO basics
+- [x] Add OG meta tags and SEO basics
+- [x] Signal redesign via Claude Design (dark theme, custom CSS, typed greeting, console, timeline)
+- [x] Deploy redesign to production
+- [x] Push all changes to GitHub
+- [x] Remove unused Kumo / Tailwind / Phosphor deps from package.json
 - [ ] Mobile responsiveness pass
 - [ ] Final review and launch
 
 ## Progress
-Progress: 85%
+Progress: 95%
 
 ## Next Actions
 1. Test mobile responsiveness at 375px, 768px, 1024px
