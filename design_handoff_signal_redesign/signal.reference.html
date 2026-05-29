@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>document.documentElement.classList.add('js');</script>
+<title>Shadi Youssef Nassar · Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0c0d10;
+    --bg-2:#131519;
+    --panel:#16181d;
+    --line:#262a31;
+    --line-2:#33373f;
+    --fg:#eef1f4;
+    --fg-soft:#9aa3ad;
+    --fg-faint:#646c76;
+    --accent:#f6821f;        /* cloudflare-nod orange */
+    --accent-2:#ffa94d;
+    --grid:rgba(255,255,255,.022);
+    --sans:"Space Grotesk",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --ar:"IBM Plex Sans Arabic",var(--sans);
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--fg);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:46px 46px;
+  }
+  ::selection{background:var(--accent);color:#0c0d10}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .mono{font-family:var(--mono)}
+  .reveal{}
+  html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  html.js .reveal.in{opacity:1;transform:none}
+  body.no-motion .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  body.no-motion .blip,body.no-motion .led,body.no-motion .glow,body.no-motion .cur{animation:none!important}
+  body.no-motion .cur{opacity:0}
+  body.no-motion .fill{transition:none!important}
+
+  .topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .mark{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+  .mark .blip{width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .topnav{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;color:var(--fg-soft)}
+  .topnav a:hover{color:var(--accent)}
+  @media(max-width:640px){.topnav{display:none}}
+
+  /* ---- hero ---- */
+  .hero{position:relative;border-bottom:1px solid var(--line);display:flex;align-items:center;min-height:calc(100svh - 62px);padding:64px 0}
+  .hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .hero-bg .glow{position:absolute;right:-8%;top:-18%;width:52vw;height:52vw;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 32%,transparent),transparent 60%);filter:blur(46px);opacity:.16;animation:breathe 7s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.11;transform:scale(1)}50%{opacity:.2;transform:scale(1.07)}}
+  .hero .wrap{position:relative;z-index:1;width:100%}
+  .hero-grid{display:grid;grid-template-columns:1.22fr .82fr;gap:54px;align-items:center}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+
+  .status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--fg-soft);border:1px solid var(--line-2);border-radius:6px;padding:6px 12px;margin-bottom:28px}
+  .status .led{width:7px;height:7px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;animation:pulse 2.4s infinite}
+  .greet{font-family:var(--mono);font-size:clamp(15px,1.9vw,18px);color:var(--accent);letter-spacing:.04em;height:1.4em;margin-bottom:14px}
+  .greet .cur{display:inline-block;width:9px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
+  .greet .g.ar{font-family:var(--ar)}
+  @keyframes blink{50%{opacity:0}}
+  h1.name{font-weight:700;font-size:clamp(44px,7.2vw,90px);line-height:.9;letter-spacing:-.03em;margin-bottom:24px}
+  h1.name .o{color:var(--accent)}
+  .tagline{font-size:clamp(20px,2.4vw,27px);font-weight:600;color:var(--fg);line-height:1.3;letter-spacing:-.01em;max-width:24ch;margin-bottom:22px}
+  .tagline .hl{color:var(--accent)}
+  .lede{font-size:clamp(16.5px,1.7vw,19px);line-height:1.6;color:var(--fg-soft);max-width:42ch}
+  .lede b{color:var(--fg);font-weight:600}
+  .now{margin-top:26px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:13px;color:var(--fg-soft);border-left:2px solid var(--accent);padding:5px 0 5px 14px;line-height:1.5}
+  .now b{color:var(--fg);font-weight:600}
+  .now .tag{color:var(--accent);white-space:nowrap}
+  .hero-cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;padding:13px 22px;border-radius:9px;transition:transform .25s,box-shadow .25s,border-color .25s,color .25s,background .25s;cursor:pointer}
+  .btn.primary{background:var(--accent);color:#0c0d10}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px var(--accent)}
+  .btn.ghost{border:1px solid var(--line-2);color:var(--fg-soft)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .hero-proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:46px}
+  .hero-proof .p{font-family:var(--mono);font-size:12px;color:var(--fg-soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--bg-2)}
+  .hero-proof .p b{color:var(--accent);font-weight:700}
+  .hero-proof .p.ar-pill{font-family:var(--ar)}
+
+  /* ---- telemetry console ---- */
+  .console{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--panel),var(--bg-2));overflow:hidden;font-family:var(--mono);box-shadow:0 34px 70px -34px rgba(0,0,0,.7);align-self:center}
+  .console .chead{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--line);font-size:10.5px;color:var(--fg-faint);letter-spacing:.1em;text-transform:uppercase}
+  .console .chead .live{display:inline-flex;align-items:center;gap:8px;color:var(--fg-soft)}
+  .console .chead .led{width:7px;height:7px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;animation:pulse 2.4s infinite}
+  .console .cbody{padding:20px 20px 22px}
+  .cr-title{font-size:16px;color:var(--fg);font-weight:700;letter-spacing:-.01em}
+  .cr-sub{font-size:12px;color:var(--fg-soft);margin-top:3px}
+  .cdiv{height:1px;background:var(--line);margin:18px 0}
+  .clabel{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:14px}
+  .clabel .ctag{text-transform:none;letter-spacing:0;color:var(--line-2);font-size:10px;margin-left:4px}
+  .qtable{display:flex;flex-direction:column;gap:15px}
+  .qrow{display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:16px}
+  .qp{font-size:12px;color:var(--fg-faint)}
+  .qv{font-size:27px;font-weight:700;color:var(--fg);letter-spacing:-.02em;text-align:right;font-variant-numeric:tabular-nums}
+  .qv .qpct{font-size:.5em;color:var(--accent);font-weight:700;margin-left:1px;vertical-align:baseline}
+  .qd{font-size:12px;font-weight:700;color:#3ddc84;min-width:42px;text-align:right;font-variant-numeric:tabular-nums}
+  .cladder{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--fg-faint);flex-wrap:wrap}
+  .cladder .arr{color:var(--line-2)}
+  .cladder .cur2{color:var(--accent);font-weight:700}
+  .clangs{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--fg-soft);flex-wrap:wrap}
+  .clangs .arr{color:var(--line-2)}
+  .clangs .ar2{font-family:var(--ar)}
+
+  /* ---- sections ---- */
+  section{padding:80px 0}
+  .seclabel{display:flex;align-items:center;gap:14px;margin-bottom:40px}
+  .seclabel .num{font-family:var(--mono);font-size:12px;color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:3px 8px}
+  .seclabel h2{font-weight:600;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.01em}
+  .seclabel .alt{font-family:var(--ar);font-size:14px;color:var(--fg-faint);margin-left:auto}
+
+  .about{display:grid;grid-template-columns:1.4fr 1fr;gap:52px;align-items:start}
+  @media(max-width:780px){.about{grid-template-columns:1fr;gap:30px}}
+  .about p{font-size:17px;line-height:1.72;color:var(--fg-soft);margin-bottom:16px}
+  .about p b{color:var(--fg);font-weight:600}
+  .about .card{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:24px}
+  .about .card h3{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--fg-soft);border:1px solid var(--line-2);border-radius:6px;padding:6px 10px;transition:border-color .3s,color .3s}
+  .chip:hover{border-color:var(--accent);color:var(--accent)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .hs{background:var(--bg);padding:24px 22px;transition:background .3s}
+  .hs:hover{background:var(--bg-2)}
+  .hs .v{font-family:var(--mono);font-weight:700;font-size:32px;color:var(--fg);letter-spacing:-.02em}
+  .hs .v em{color:var(--accent);font-style:normal;font-size:.6em}
+  .hs.hot .v{color:var(--accent)}
+  .hs .k{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+
+  .tl{position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:4px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--line))}
+  .node{position:relative;padding:0 0 36px}
+  .node:last-child{padding-bottom:0}
+  .node::before{content:"";position:absolute;left:-26px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .node .when{font-family:var(--mono);font-size:12px;color:var(--fg-faint);letter-spacing:.04em}
+  .node .co{font-size:21px;font-weight:600;margin:4px 0 2px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .node .role{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:500}
+  .node ul{margin:12px 0 0;padding-left:17px;display:flex;flex-direction:column;gap:6px}
+  .node li{font-size:15px;color:var(--fg-soft);line-height:1.5}
+  .node li::marker{color:var(--accent)}
+
+  .langs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  @media(max-width:680px){.langs{grid-template-columns:1fr}}
+  .lang{background:var(--panel);padding:28px 26px;transition:background .3s}
+  .lang:hover{background:#191c22}
+  .lang .word{font-size:30px;font-weight:700;letter-spacing:-.01em}
+  .lang .word.ar{font-family:var(--ar)}
+  .lang .en{font-family:var(--mono);font-size:13px;color:var(--fg-soft);margin-top:12px}
+  .lang .lvl{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+
+  .contact{border-top:1px solid var(--line);text-align:center}
+  .contact .big{font-weight:700;font-size:clamp(34px,6.5vw,76px);line-height:1;letter-spacing:-.03em;margin-bottom:30px}
+  .contact .big a:hover{color:var(--accent)}
+  .clinks{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+  .clink{font-family:var(--mono);display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);border-radius:8px;padding:12px 22px;font-size:13.5px;font-weight:500;transition:border-color .3s,color .3s,background .3s,transform .25s}
+  .clink:hover{border-color:var(--accent);color:var(--accent);background:var(--bg-2);transform:translateY(-2px)}
+  footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);font-size:12px;color:var(--fg-faint)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .home-link{position:fixed;left:20px;bottom:20px;z-index:40;font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--accent);color:#0c0d10;padding:9px 15px;border-radius:7px;font-weight:700;transition:transform .25s}
+  .home-link:hover{transform:translateY(-2px)}
+
+  /* ---- tweaks panel ---- */
+  .tweaks{position:fixed;right:18px;bottom:18px;z-index:60;width:248px;background:rgba(18,20,25,.94);backdrop-filter:blur(14px);border:1px solid var(--line-2);border-radius:14px;font-family:var(--mono);box-shadow:0 30px 60px -20px rgba(0,0,0,.7);overflow:hidden}
+  .tweaks[hidden]{display:none}
+  .tk-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-soft)}
+  .tk-x{background:none;border:none;color:var(--fg-faint);font-size:14px;cursor:pointer;line-height:1;padding:2px 4px;border-radius:5px}
+  .tk-x:hover{color:var(--fg);background:var(--line)}
+  .tk-body{padding:16px 15px 18px;display:flex;flex-direction:column;gap:18px}
+  .tk-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:9px}
+  .tk-swatches{display:flex;gap:9px}
+  .tk-sw{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:transform .2s}
+  .tk-sw:hover{transform:scale(1.08)}
+  .tk-sw.on{border-color:var(--fg)}
+  .tk-seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px;gap:3px}
+  .tk-seg button{flex:1;font-family:var(--mono);font-size:11px;color:var(--fg-soft);background:none;border:none;padding:7px 4px;border-radius:6px;cursor:pointer;transition:background .2s,color .2s}
+  .tk-seg button.on{background:var(--accent);color:#0c0d10;font-weight:700}
+  .tk-row{display:flex;align-items:center;justify-content:space-between}
+  .tk-row .tk-label{margin-bottom:0}
+  .tk-toggle{width:42px;height:24px;border-radius:999px;background:var(--line);border:1px solid var(--line-2);position:relative;cursor:pointer;transition:background .25s}
+  .tk-toggle::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--fg-soft);transition:transform .25s,background .25s}
+  .tk-toggle.on{background:var(--accent)}
+  .tk-toggle.on::after{transform:translateX(18px);background:#0c0d10}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="mark"><span class="blip"></span> shadiyn.org</div>
+    <nav class="topnav">
+      <a href="#about">/about</a>
+      <a href="#wins">/wins</a>
+      <a href="#path">/track-record</a>
+      <a href="#contact">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" data-screen-label="Hero">
+    <div class="hero-bg"><span class="glow"></span></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="status reveal"><span class="led"></span> Senior Account Executive · Cloudflare · London, UK</div>
+          <div class="greet reveal"><span class="g" id="greet">Hello</span><span class="cur"></span></div>
+          <h1 class="name reveal">Shadi Youssef<br />Nassar<span class="o">.</span></h1>
+          <p class="tagline reveal">A <span class="hl">frontier-tech</span> background, applied to enterprise sales.</p>
+          <p class="lede reveal">I help UK&amp;I enterprises secure and modernize their infrastructure on <b>Cloudflare</b>, rebuilding the customer experience from legacy architectures to serverless and full-stack platform migrations. Five years, BDR to Senior Territory AE, consistently over quota. Before cloud, I came up through blockchain, consulting and digital transformation, across <b>three languages and three continents</b>.</p>
+          <div class="now reveal"><span class="tag">now →</span><span>Senior Territory <b>Account Executive</b>, UK&amp;I at Cloudflare</span></div>
+          <div class="hero-cta reveal">
+            <a class="btn primary" href="#contact">Get in touch</a>
+            <a class="btn ghost" href="#path">View track record</a>
+          </div>
+        </div>
+        <aside class="console reveal">
+          <div class="chead"><span class="live"><span class="led"></span> live</span><span>London, UK</span></div>
+          <div class="cbody">
+            <div class="cr-title">Senior Territory AE</div>
+            <div class="cr-sub">Cloudflare · UK &amp; Ireland</div>
+            <div class="cdiv"></div>
+            <div class="clabel">// quota attainment <span class="ctag">vs. 100% target</span></div>
+            <div class="qtable">
+              <div class="qrow"><span class="qp">Q1 '26</span><span class="qv">140<span class="qpct">%</span></span><span class="qd">▲ +40</span></div>
+              <div class="qrow"><span class="qp">FY25</span><span class="qv">105<span class="qpct">%</span></span><span class="qd">▲ +5</span></div>
+              <div class="qrow"><span class="qp">FY24</span><span class="qv">125<span class="qpct">%</span></span><span class="qd">▲ +25</span></div>
+            </div>
+            <div class="cdiv"></div>
+            <div class="cladder"><span>BDR</span><span class="arr">▸</span><span>AE</span><span class="arr">▸</span><span class="cur2">Sr AE · P4</span></div>
+            <div class="cdiv"></div>
+            <div class="clabel" style="margin-bottom:11px">// languages</div>
+            <div class="clangs"><span>English</span><span class="arr">·</span><span>Español</span><span class="arr">·</span><span class="ar2">العربية</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="seclabel reveal"><span class="num">01</span><h2>About</h2><span class="alt">عنّي</span></div>
+      <div class="about">
+        <div class="reveal">
+          <p>I'm a Senior Account Executive at <b>Cloudflare</b>. Over five years I've gone from BDR to Senior Territory AE for the UK &amp; Ireland, overachieving quota while helping enterprises secure and accelerate their infrastructure.</p>
+          <p>Before cloud I lived on the frontier: founded a <b>university blockchain society</b>, wrote for a London crypto consultancy, and advised <b>T1/T2 MENA banks</b> on digital transformation at Deloitte and Layer. Same throughline throughout: disruptive tech, real-world value.</p>
+          <p>I operate natively across <b>English, Spanish and Lebanese Arabic</b>, and currently point UK&amp;I Sales on internal <b>AI &amp; productivity</b> initiatives.</p>
+        </div>
+        <div class="card reveal">
+          <h3>// stack &amp; methods</h3>
+          <div class="chips">
+            <span class="chip">MEDDPICC</span><span class="chip">MEDDIC</span><span class="chip">BANT</span>
+            <span class="chip">Salesforce</span><span class="chip">Agile</span><span class="chip">Data &amp; Reporting</span>
+            <span class="chip">Claude Code</span><span class="chip">Opencode</span><span class="chip">Open Banking / DLT</span>
+          </div>
+          <h3 style="margin-top:22px">// credentials</h3>
+          <div class="chips">
+            <span class="chip">BSc Mgmt &amp; Analytics</span><span class="chip">IBM Blockchain</span><span class="chip">Bloomberg BMC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wins" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="seclabel reveal"><span class="num">02</span><h2>Selected Wins</h2><span class="alt">إنجازات</span></div>
+      <div class="stats reveal">
+        <div class="hs hot"><div class="v">140<em>%</em></div><div class="k">Quota · Q1'26</div></div>
+        <div class="hs hot"><div class="v">105<em>%</em></div><div class="k">Quota · FY25</div></div>
+        <div class="hs hot"><div class="v">125<em>%</em></div><div class="k">Annual · FY24</div></div>
+        <div class="hs hot"><div class="v">116<em>%</em></div><div class="k">Avg qtr · BDR</div></div>
+        <div class="hs"><div class="v">P4</div><div class="k">Promoted Q1'25</div></div>
+        <div class="hs"><div class="v">10k<em>+</em></div><div class="k">Article reads</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <div class="seclabel reveal"><span class="num">03</span><h2>Track Record</h2><span class="alt">المسيرة</span></div>
+      <div class="tl">
+        <div class="node reveal"><div class="when">APR 2022 – PRESENT</div><div class="co">Cloudflare <span class="role">Senior Territory AE, UK&amp;I</span></div><ul><li>UKI Sales internal AI &amp; productivity point of contact</li><li>140% Q1'26 · 105% FY25 · promoted to Senior AE (P4) Q1'25</li><li>Selected rep on the Global AI Tiger Team GTM strategy</li></ul></div>
+        <div class="node reveal"><div class="when">SEP 2020 – MAR 2022</div><div class="co">Cloudflare <span class="role">Business Development Rep</span></div><ul><li>116% avg quarterly attainment; Global &amp; EMEA BDR of the Quarter</li><li>Founded the BizDev Business Intelligence function</li></ul></div>
+        <div class="node reveal"><div class="when">JUN – SEP 2020</div><div class="co">Layer · Ubanquity Systems <span class="role">Analyst · Digital Transformation</span></div><ul><li>Primary analyst on transformation engagements with T1/T2 MENA banks</li><li>Defined technical requirements end-to-end with PM, design &amp; engineering</li></ul></div>
+        <div class="node reveal"><div class="when">JUN – SEP 2019</div><div class="co">Deloitte <span class="role">Consulting Intern</span></div><ul><li>Greenfield digital IT infrastructure for a UAE government provider</li><li>Supported bids across public &amp; private sector clients (FinTech, banking)</li></ul></div>
+        <div class="node reveal"><div class="when">2017 – 2020</div><div class="co">Cryptolingo · Kent Blockchain Society <span class="role">Writer · Founder</span></div><ul><li>Founded &amp; led the University of Kent Blockchain Society</li><li>Most-read article passed 10,000 reads, 30k+ impressions</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="seclabel reveal" style="justify-content:center"><span class="num">04</span><h2>Get in touch</h2></div>
+      <div class="big reveal"><a href="mailto:shadihamdan1997@gmail.com">Let's build something.</a></div>
+      <div class="clinks reveal">
+        <a class="clink" href="mailto:shadihamdan1997@gmail.com">→ Email</a>
+        <a class="clink" href="https://www.linkedin.com/in/shadiyoussefnassar/" target="_blank" rel="noopener">→ LinkedIn</a>
+        <a class="clink" href="https://github.com/shadiyoussef" target="_blank" rel="noopener">→ GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Shadi Youssef Nassar</span><span>London · Madrid · Beirut</span></div>
+</footer>
+
+<a class="home-link" href="index.html">← all directions</a>
+
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks" hidden>
+  <div class="tk-head"><span>Tweaks</span><button class="tk-x" id="tkClose" aria-label="Close">✕</button></div>
+  <div class="tk-body">
+    <div>
+      <div class="tk-label">Accent</div>
+      <div class="tk-swatches" id="tkAccent"></div>
+    </div>
+    <div>
+      <div class="tk-label">Typeface</div>
+      <div class="tk-seg" id="tkFont"></div>
+    </div>
+    <div class="tk-row">
+      <div class="tk-label">Motion</div>
+      <button class="tk-toggle" id="tkMotion" role="switch" aria-label="Toggle motion"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TWEAKS = /*EDITMODE-BEGIN*/{
+    "accent": "#f6821f",
+    "typeface": "Space Grotesk",
+    "motion": true
+  }/*EDITMODE-END*/;
+
+  const ACCENTS = [
+    {hex:"#f6821f", a2:"#ffa94d"},
+    {hex:"#4793ff", a2:"#82b6ff"},
+    {hex:"#2fc98d", a2:"#5fe0ad"},
+    {hex:"#9b87ff", a2:"#bcacff"}
+  ];
+  const FONTS = ["Space Grotesk","Schibsted Grotesk","Hanken Grotesk"];
+
+  function applyAccent(hex){
+    const m = ACCENTS.find(a=>a.hex.toLowerCase()===String(hex).toLowerCase()) || ACCENTS[0];
+    document.documentElement.style.setProperty('--accent', m.hex);
+    document.documentElement.style.setProperty('--accent-2', m.a2);
+  }
+  function applyFont(name){
+    document.documentElement.style.setProperty('--sans', '"'+name+'", system-ui, sans-serif');
+  }
+  let motionOn = TWEAKS.motion;
+  function applyMotion(on){
+    motionOn = on;
+    document.body.classList.toggle('no-motion', !on);
+  }
+
+  // ---- greeting (typed, trilingual) ----
+  const greets=[{t:"Hello, I'm Shadi.",ar:false},{t:"Hola, soy Shadi.",ar:false},{t:"مرحبا، أنا شادي.",ar:true}];
+  const gEl=document.getElementById("greet");
+  let gi=0,ci=0,dir=1,tTimer=null;
+  function renderGreet(full){
+    const cur=greets[gi];
+    gEl.className="g"+(cur.ar?" ar":"");
+    gEl.textContent=full?cur.t:cur.t.slice(0,ci);
+  }
+  function type(){
+    if(!motionOn){renderGreet(true);return;}
+    const cur=greets[gi];
+    renderGreet(false);
+    if(dir>0){ci++;if(ci>cur.t.length){dir=-1;tTimer=setTimeout(type,1500);return;}}
+    else{ci--;if(ci<0){ci=0;dir=1;gi=(gi+1)%greets.length;tTimer=setTimeout(type,200);return;}}
+    tTimer=setTimeout(type,dir>0?70:32);
+  }
+
+  // ---- bars (snap if transitions aren't actually animating) ----
+  function fillBars(animated){
+    document.querySelectorAll('.fill').forEach(f=>{
+      if(animated){f.style.width=f.dataset.w+'%';}
+      else{const t=f.style.transition;f.style.transition='none';f.style.width=f.dataset.w+'%';void f.offsetWidth;f.style.transition=t;}
+    });
+  }
+
+  // ---- reveals ----
+  // Content is visible by default. The hidden->animate state lives under html.js.
+  // Visibility must NEVER depend on a deferred API (rAF/IO/transitions), since some
+  // webviews silently no-op them. Strategy: use the IntersectionObserver's own first
+  // callback as a health signal; if it never fires (dead in this env), an unconditional
+  // setTimeout failsafe drops html.js and snaps everything visible.
+  const docEl=document.documentElement;
+  const revealEls=[...document.querySelectorAll(".reveal")];
+  const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ioAlive=false;
+
+  function showEverything(){
+    docEl.classList.remove('js');
+    revealEls.forEach(el=>{
+      el.classList.add('in');
+      el.style.setProperty('transition','none','important');
+      el.style.setProperty('opacity','1','important');
+      el.style.setProperty('transform','none','important');
+    });
+    fillBars(false);
+  }
+  function initReveals(){
+    if(!motionOn||reduceMotion||!('IntersectionObserver' in window)){showEverything();return;}
+    const io=new IntersectionObserver((es)=>{
+      ioAlive=true; // observer is functional in this environment
+      es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});
+    },{threshold:.08,rootMargin:"0px 0px -8% 0px"});
+    revealEls.forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*40)+"ms";io.observe(el);});
+    fillBars(true);
+    // failsafe: if the observer never fired, the environment is broken, so force-show.
+    setTimeout(()=>{if(!ioAlive)showEverything();},1000);
+  }
+
+  // ---- init from tweaks ----
+  applyAccent(TWEAKS.accent);
+  applyFont(TWEAKS.typeface);
+  applyMotion(TWEAKS.motion);
+  type();
+  initReveals();
+
+  // ---- tweaks panel wiring ----
+  const panel=document.getElementById('tweaks');
+  function persist(edits){window.parent.postMessage({type:'__edit_mode_set_keys',edits},'*');}
+
+  // accent swatches
+  const accWrap=document.getElementById('tkAccent');
+  ACCENTS.forEach(a=>{
+    const b=document.createElement('button');
+    b.className='tk-sw'+(a.hex.toLowerCase()===TWEAKS.accent.toLowerCase()?' on':'');
+    b.style.background=a.hex;b.dataset.hex=a.hex;b.type='button';
+    b.addEventListener('click',()=>{
+      applyAccent(a.hex);TWEAKS.accent=a.hex;
+      accWrap.querySelectorAll('.tk-sw').forEach(s=>s.classList.toggle('on',s.dataset.hex===a.hex));
+      persist({accent:a.hex});
+    });
+    accWrap.appendChild(b);
+  });
+  // font segments
+  const fontWrap=document.getElementById('tkFont');
+  FONTS.forEach(f=>{
+    const b=document.createElement('button');
+    b.textContent=f.split(' ')[0];b.dataset.font=f;b.type='button';
+    b.className=(f===TWEAKS.typeface?'on':'');
+    b.addEventListener('click',()=>{
+      applyFont(f);TWEAKS.typeface=f;
+      fontWrap.querySelectorAll('button').forEach(s=>s.classList.toggle('on',s.dataset.font===f));
+      persist({typeface:f});
+    });
+    fontWrap.appendChild(b);
+  });
+  // motion toggle
+  const mt=document.getElementById('tkMotion');
+  function syncMotionUI(){mt.classList.toggle('on',motionOn);}
+  syncMotionUI();
+  mt.addEventListener('click',()=>{
+    applyMotion(!motionOn);syncMotionUI();
+    if(motionOn){clearTimeout(tTimer);ci=0;dir=1;type();fillBars(true);}
+    else{clearTimeout(tTimer);renderGreet(true);fillBars(false);}
+    persist({motion:motionOn});
+  });
+
+  // ---- host protocol ----
+  window.addEventListener('message',(e)=>{
+    const t=e.data&&e.data.type;
+    if(t==='__activate_edit_mode'){panel.hidden=false;}
+    else if(t==='__deactivate_edit_mode'){panel.hidden=true;}
+  });
+  document.getElementById('tkClose').addEventListener('click',()=>{
+    panel.hidden=true;window.parent.postMessage({type:'__edit_mode_dismissed'},'*');
+  });
+  window.parent.postMessage({type:'__edit_mode_available'},'*');
+</script>
+</body>
+</html>
